@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xcy.mapper.SanjiMapper">
+    <resultMap id="AreaMap" type="Area">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="code" jdbcType="CHAR" property="code" />
+        <result column="right" jdbcType="INTEGER" property="right" />
+        <result column="left" jdbcType="INTEGER" property="left" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+        <result column="level" jdbcType="TINYINT" property="level" />
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    </resultMap>
+
+    <select id="showAllProvince" resultMap="AreaMap">
+        select * from area where level = 1
+    </select>
+
+    <select id="showAllCity" parameterType="int" resultMap="AreaMap">
+        select * from area where parent_id = #{id} and level = 2
+    </select>
+
+    <select id="showAllCountry" parameterType="int" resultMap="AreaMap">
+        select * from area where parent_id = #{id} and level = 3
+    </select>
+</mapper>
